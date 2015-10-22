@@ -19,9 +19,9 @@
 #
 # Resource for InfluxDB database
 
-property :name, String, name_property: true
-property :auth_username, String, default: 'root'
-property :auth_password, String, default: 'root'
+attribute :name, :kind_of => String, :name_attribute => true
+attribute :auth_username, :kind_of => String, :default => 'root'
+attribute :auth_password, :kind_of => String, :default => 'root'
 
 action :create do
   next if client.list_databases.map { |x| x['name'] }.member?(name)
