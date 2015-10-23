@@ -19,12 +19,12 @@
 #
 # Resource for InfluxDB user
 
-attribute :username, :kind_of => String, :name_attribute => true
-attribute :password, :kind_of => String
-attribute :databases, :kind_of => Array, :default => []
-attribute :permissions, :kind_of => Array, :default => []
-attribute :auth_username, :kind_of => String, :default => 'root'
-attribute :auth_password, :kind_of => String, :default => 'root'
+property :username, String, name_property: true
+property :password, String
+property :databases, Array, default: []
+property :permissions, Array, default: []
+property :auth_username, String, default: 'root'
+property :auth_password, String, default: 'root'
 
 action :create do
   unless password

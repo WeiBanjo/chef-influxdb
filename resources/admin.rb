@@ -19,10 +19,10 @@
 #
 # Resource for InfluxDB cluster admin
 
-attribute :username, :kind_of => String, :name_attribute => true
-attribute :password, :kind_of => String
-attribute :auth_username, :kind_of => String, :default => 'root'
-attribute :auth_password, :kind_of => String, :default => 'root'
+property :username, String, name_property: true
+property :password, String
+property :auth_username, String, default: 'root'
+property :auth_password, String, default: 'root'
 
 action :create do
   unless password

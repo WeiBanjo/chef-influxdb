@@ -19,8 +19,8 @@
 #
 # Resource for building influxdb config file
 
-attribute :path, :kind_of => String, :name_attribute => true
-attribute :config, :kind_of => Hash, :required => true
+property :path, String, name_property: true
+property :config, Hash, required: true
 
 action :create do
   require 'toml'

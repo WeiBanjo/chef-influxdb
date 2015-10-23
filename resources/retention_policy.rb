@@ -19,14 +19,14 @@
 #
 # Resource for InfluxDB database
 
-attribute :name, :kind_of => String, :name_attribute => true
-attribute :policy_name, :kind_of => String
-attribute :database, :kind_of => String
-attribute :duration, :kind_of => String, :default => 'INF'
-attribute :replication, :kind_of => Fixnum, default::default => 1
-attribute :default, :kind_of => [TrueClass, FalseClass], :default => false
-attribute :auth_username, :kind_of => String, :default => 'root'
-attribute :auth_password, :kind_of => String, :default => 'root'
+property :name, String, name_property: true
+property :policy_name, String
+property :database, String
+property :duration, String, default: 'INF'
+property :replication, Fixnum, default: 1
+property :default, [TrueClass, FalseClass], default: false
+property :auth_username, String, default: 'root'
+property :auth_password, String, default: 'root'
 
 action :create do
   if current_policy
