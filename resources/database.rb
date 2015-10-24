@@ -17,30 +17,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Resource for InfluxDB database
+# LWRP for InfluxDB database
 
-property :name, String, name_property: true
-property :auth_username, String, default: 'root'
-property :auth_password, String, default: 'root'
+actions(:create, :delete)
+default_action(:create)
 
-action :create do
-  next if client.list_databases.map { |x| x['name'] }.member?(name)
+attribute(:name, kind_of: String, name_attribute: true)
 
-  client.create_database(name)
-  updated_by_last_action true
-end
-
-action :delete do
-  client.delete_database(name)
-  updated_by_last_action true
-end
-
-def client
-  require 'influxdb'
-  @client ||=
-    InfluxDB::Client.new(
-      username: auth_username,
-      password: auth_password,
-      retry: 10
-    )
-end
+attribute(:auth_username, kind_of: String, default: 'root')
+attribute(:auth_password, kind_of: String, default: 'root')

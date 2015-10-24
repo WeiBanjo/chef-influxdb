@@ -1,4 +1,4 @@
-# resources/user.rb
+# providers/database.rb
 #
 # Author: Simple Finance <ops@simple.com>
 # License: Apache License, Version 2.0
@@ -17,15 +17,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# LWRP for InfluxDB user
+# Creates or deletes an InfluxDB database
 
-actions(:create, :update, :delete)
-default_action(:create)
+include InfluxDB::Helpers
 
-attribute(:username, kind_of: String, name_attribute: true)
-attribute(:password, kind_of: String)
-attribute(:databases, kind_of: Array, required: false, default: [])
-attribute(:permissions, kind_of: Array, required: false, default: [])
+def initialize(new_resource, run_context)
+  super
+  @name    = new_resource.name
+  @client  = InfluxDB::Helpers.client(new_resource.auth_username, new_resource.auth_password, run_context)
+end
 
-attribute(:auth_username, kind_of: String, default: 'root')
-attribute(:auth_password, kind_of: String, default: 'root')
+action :create do
+  next if @client.list_databases.map { |x| x['name'] }.member?(@name)
+
+  @client.create_database(@name)
+end
+
+action :delete do
+  @client.delete_database(@name)
+end
